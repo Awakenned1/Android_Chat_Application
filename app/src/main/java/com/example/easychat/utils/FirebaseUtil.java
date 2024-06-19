@@ -1,5 +1,6 @@
 package com.example.easychat.utils;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -73,13 +74,19 @@ public class FirebaseUtil {
                 .child(FirebaseUtil.currentUserId());
     }
 
-    public static StorageReference  getOtherProfilePicStorageRef(String otherUserId){
-        return FirebaseStorage.getInstance().getReference().child("profile_pic")
-                .child(otherUserId);
+    public static Task<Object> updateUserPassword(String newPassword) {
+        return null;
     }
 
-
+    public static StorageReference getOtherProfilePicStorageRef(String userId) {
+        if (userId == null || userId.isEmpty()) {
+            throw new IllegalArgumentException("userId cannot be null or empty");
+        }
+        return FirebaseStorage.getInstance().getReference().child("profile_pics").child(userId + ".jpg");
+    }
 }
+
+
 
 
 

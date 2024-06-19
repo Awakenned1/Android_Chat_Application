@@ -2,60 +2,62 @@ package com.example.easychat.model;
 
 import com.google.firebase.Timestamp;
 
-public class UserModel {
-    private String phone;
-    private String username;
-    private Timestamp createdTimestamp;
-    private String userId;
-    private String fcmToken;
 
-    public UserModel() {
-    }
+    public class UserModel {
+        private String userId;
+        private String userName;
+        private String profilePicUrl;
+        private String email;
 
-    public UserModel(String phone, String username, Timestamp createdTimestamp,String userId) {
-        this.phone = phone;
-        this.username = username;
-        this.createdTimestamp = createdTimestamp;
-        this.userId = userId;
-    }
+private String fcmToken;
+        public UserModel(String userId, String userName, String profilePicUrl) {
+            this.userId = userId;
+            this.userName = userName;
+            this.email = email;
+            this.profilePicUrl = profilePicUrl;
+        }
 
-    public String getPhone() {
-        return phone;
-    }
+        public UserModel() {
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+        }
 
-    public String getUsername() {
-        return username;
-    }
+        public String getUserId() {
+            return userId;
+        }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
 
-    public Timestamp getCreatedTimestamp() {
-        return createdTimestamp;
-    }
+        public String getUserName() {
+            return userName;
+        }
 
-    public void setCreatedTimestamp(Timestamp createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
 
-    public String getUserId() {
-        return userId;
-    }
+        public String getProfilePicUrl() {
+            return profilePicUrl;
+        }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
-    public String getFcmToken() {
-        return fcmToken;
-    }
+        public void setProfilePicUrl(String profilePicUrl) {
+            this.profilePicUrl = profilePicUrl;
+        }
 
-    public void setFcmToken(String fcmToken) {
-        this.fcmToken = fcmToken;
+        public String getFcmToken() {
+
+            return fcmToken;
+        }
+        public void setFcmToken(String fcmToken) {
+            this.fcmToken=fcmToken;
+        }
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
     }
-}
