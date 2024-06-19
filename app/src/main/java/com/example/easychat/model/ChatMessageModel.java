@@ -16,10 +16,6 @@ public class ChatMessageModel {
         this.timestamp = timestamp;
     }
 
-    public ChatMessageModel(String s, String user1) {
-
-    }
-
     public String getMessage() {
         return message;
     }

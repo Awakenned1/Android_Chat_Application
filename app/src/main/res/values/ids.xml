@@ -2,4 +2,8 @@
 <resources>
     <item name="main_frame_layout" type="id"/>
     <item name="recyler_view" type="id"/>
+    <item name="email_text" type="id"/>
+    <item name="profil_email" type="id"/>
+    <item name="chat_rooms_recycler_view" type="id"/>
+    <item name="recycler_view" type="id"/>
 </resources>

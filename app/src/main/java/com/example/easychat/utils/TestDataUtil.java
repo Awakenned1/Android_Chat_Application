@@ -10,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class TestDataUtil {
 
@@ -25,69 +26,77 @@ public class TestDataUtil {
     }
 
     private static void addUsers() {
-        UserModel user1 = new UserModel("user1", "User One", "https://example.com/user1.jpg");
-        UserModel user2 = new UserModel("user2", "User Two", "https://example.com/user2.jpg");
+        List<UserModel> users = Arrays.asList(
+                new UserModel("ironman", "Iron Man", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("spiderman", "Spider-Man", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("captainamerica", "Captain America", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("blackwidow", "Black Widow", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("hulk", "Hulk", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("thor", "Thor", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("scarletwitch", "Scarlet Witch", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("blackpanther", "Black Panther", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("doctorstrange", "Doctor Strange", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now()),
+                new UserModel("antman", "Ant-Man", "https://i.imgur.com/6S4NNpm.jpg", Timestamp.now())
+        );
 
-        if (user1.getUserId() != null && !user1.getUserId().isEmpty()) {
-            usersCollection.document(user1.getUserId()).set(user1)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added user1"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding user1", e));
-        } else {
-            Log.e(TAG, "User ID for user1 is null or empty.");
-        }
-
-        if (user2.getUserId() != null && !user2.getUserId().isEmpty()) {
-            usersCollection.document(user2.getUserId()).set(user2)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added user2"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding user2", e));
-        } else {
-            Log.e(TAG, "User ID for user2 is null or empty.");
+        for (UserModel user : users) {
+            if (user.getUserId() != null && !user.getUserId().isEmpty()) {
+                usersCollection.document(user.getUserId()).set(user)
+                        .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added user: " + user.getUserId()))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error adding user: " + user.getUserId(), e));
+            } else {
+                Log.e(TAG, "User ID for user is null or empty: " + user.getUserName());
+            }
         }
     }
 
-
     private static void addChatrooms() {
-        ChatroomModel chatroom1 = new ChatroomModel("chatroom1",
-                Arrays.asList("user1", "user2"), Timestamp.now(), "Hello, User Two!");
+        List<ChatroomModel> chatrooms = Arrays.asList(
+                new ChatroomModel("chatroom1", Arrays.asList("ironman", "spiderman"), Timestamp.now(), "Hello, Spider-Man!"),
+                new ChatroomModel("chatroom2", Arrays.asList("hulk", "thor"), Timestamp.now(), "Hey Thor!")
+        );
 
-        ChatroomModel chatroom2 = new ChatroomModel("chatroom2",
-                Arrays.asList("user2", "user1"), Timestamp.now(), "Hello, User One!");
-
-        if (chatroom1.getChatroomId() != null && !chatroom1.getChatroomId().isEmpty()) {
-            db.collection("chatrooms").document(chatroom1.getChatroomId()).set(chatroom1)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added chatroom1"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding chatroom1", e));
-        } else {
-            Log.e(TAG, "Chatroom ID for chatroom1 is null or empty.");
-        }
-
-        if (chatroom2.getChatroomId() != null && !chatroom2.getChatroomId().isEmpty()) {
-            db.collection("chatrooms").document(chatroom2.getChatroomId()).set(chatroom2)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added chatroom2"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding chatroom2", e));
-        } else {
-            Log.e(TAG, "Chatroom ID for chatroom2 is null or empty.");
+        for (ChatroomModel chatroom : chatrooms) {
+            if (chatroom.getChatroomId() != null && !chatroom.getChatroomId().isEmpty()) {
+                db.collection("chatrooms").document(chatroom.getChatroomId()).set(chatroom)
+                        .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added chatroom: " + chatroom.getChatroomId()))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error adding chatroom: " + chatroom.getChatroomId(), e));
+            } else {
+                Log.e(TAG, "Chatroom ID for chatroom is null or empty.");
+            }
         }
     }
 
     private static void addChatMessages() {
-        ChatMessageModel message1 = new ChatMessageModel("Hello, User Two!", "user1", Timestamp.now());
-        ChatMessageModel message2 = new ChatMessageModel("Hi, User One!", "user2", Timestamp.now());
+        List<ChatMessageModel> messages = Arrays.asList(
+                new ChatMessageModel("Hello, Spider-Man!", "ironman", Timestamp.now()),
+                new ChatMessageModel("Hi, Iron Man!", "spiderman", Timestamp.now()),
+                new ChatMessageModel("Hey Thor!", "hulk", Timestamp.now()),
+                new ChatMessageModel("Hey Hulk!", "thor", Timestamp.now())
+        );
 
-        if (message1 != null && message1.getSenderId() != null && !message1.getSenderId().isEmpty()) {
-            db.collection("chatrooms").document("chatroom1").collection("messages").add(message1)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added message1"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding message1", e));
-        } else {
-            Log.e(TAG, "Message1 or its sender ID is null or empty.");
+        // Adding messages to chatroom1
+        CollectionReference chatroom1Messages = db.collection("chatrooms").document("chatroom1").collection("messages");
+        for (ChatMessageModel message : messages.subList(0, 2)) {
+            if (message.getSenderId() != null && !message.getSenderId().isEmpty()) {
+                chatroom1Messages.add(message)
+                        .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added message to chatroom1"))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error adding message to chatroom1", e));
+            } else {
+                Log.e(TAG, "Message or its sender ID is null or empty.");
+            }
         }
 
-        if (message2 != null && message2.getSenderId() != null && !message2.getSenderId().isEmpty()) {
-            db.collection("chatrooms").document("chatroom1").collection("messages").add(message2)
-                    .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added message2"))
-                    .addOnFailureListener(e -> Log.e(TAG, "Error adding message2", e));
-        } else {
-            Log.e(TAG, "Message2 or its sender ID is null or empty.");
+        // Adding messages to chatroom2
+        CollectionReference chatroom2Messages = db.collection("chatrooms").document("chatroom2").collection("messages");
+        for (ChatMessageModel message : messages.subList(2, 4)) {
+            if (message.getSenderId() != null && !message.getSenderId().isEmpty()) {
+                chatroom2Messages.add(message)
+                        .addOnSuccessListener(aVoid -> Log.i(TAG, "Successfully added message to chatroom2"))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error adding message to chatroom2", e));
+            } else {
+                Log.e(TAG, "Message or its sender ID is null or empty.");
+            }
         }
     }
 }

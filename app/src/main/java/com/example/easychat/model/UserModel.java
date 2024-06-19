@@ -8,17 +8,26 @@ import com.google.firebase.Timestamp;
         private String userName;
         private String profilePicUrl;
         private String email;
-
-private String fcmToken;
-        public UserModel(String userId, String userName, String profilePicUrl) {
-            this.userId = userId;
-            this.userName = userName;
-            this.email = email;
-            this.profilePicUrl = profilePicUrl;
-        }
+        private Timestamp createdTimestamp;
 
         public UserModel() {
 
+        }
+        public UserModel(String userId, String userName, String profilePicUrl,Timestamp createdTimestamp) {
+            this.userId = userId;
+            this.userName = userName;
+            this.email = email;
+            this.createdTimestamp = createdTimestamp;
+            this.profilePicUrl = profilePicUrl;
+        }
+
+
+
+        public Timestamp getCreatedTimestamp() {
+            return createdTimestamp;
+        }
+        public void setCreatedTimestamp(Timestamp createdTimestamp) {
+            this.createdTimestamp = createdTimestamp;
         }
 
         public String getUserId() {
@@ -46,18 +55,13 @@ private String fcmToken;
             this.profilePicUrl = profilePicUrl;
         }
 
-        public String getFcmToken() {
 
-            return fcmToken;
-        }
-        public void setFcmToken(String fcmToken) {
-            this.fcmToken=fcmToken;
-        }
-        public String getEmail() {
-            return email;
-        }
 
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        public String getEmail() {
+            return email;
         }
     }
